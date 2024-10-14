@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Fragments</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="my_note">Мои заметки</string>
+    <string name="input_note">Введите текст заметки</string>
+    <string name="add_button">Добавить</string>
+    <string name="exit">Exit</string>
+</resources>
