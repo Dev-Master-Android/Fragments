@@ -7,7 +7,11 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class NoteAdapter(private val notes: List<Note>, private val dbHelper: NoteDatabaseHelper) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
+class NoteAdapter(
+    private val notes: List<Note>,
+    private val dbHelper: NoteDatabaseHelper,
+    private val onNoteClick: (Note) -> Unit
+) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -22,8 +26,7 @@ class NoteAdapter(private val notes: List<Note>, private val dbHelper: NoteDatab
         holder.noteCheckbox.setOnCheckedChangeListener(null)
         holder.noteCheckbox.isChecked = note.isCompleted
         holder.noteDate.text = note.dateCreated
-        holder.noteCheckbox.tag = note.id 
-
+        holder.noteCheckbox.tag = note.id
         holder.noteCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
             val tag = buttonView.tag as Int
             val currentNote = notes.find { it.id == tag }
@@ -32,8 +35,10 @@ class NoteAdapter(private val notes: List<Note>, private val dbHelper: NoteDatab
                 dbHelper.updateNoteCompletion(currentNote)
             }
         }
+        holder.itemView.setOnClickListener {
+            onNoteClick(note)
+        }
     }
-
 
     override fun getItemCount() = notes.size
 
@@ -44,4 +49,6 @@ class NoteAdapter(private val notes: List<Note>, private val dbHelper: NoteDatab
         val noteDate: TextView = view.findViewById(R.id.note_date)
     }
 }
+
+
 

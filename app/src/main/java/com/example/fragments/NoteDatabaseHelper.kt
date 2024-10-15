@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
 class NoteDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
-
     companion object {
         private const val DATABASE_NAME = "notes.db"
         private const val DATABASE_VERSION = 1
@@ -27,7 +26,7 @@ class NoteDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME)
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         onCreate(db)
     }
 
@@ -37,7 +36,6 @@ class NoteDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
         values.put(COLUMN_TEXT, note.text)
         values.put(COLUMN_COMPLETED, if (note.isCompleted) 1 else 0)
         values.put(COLUMN_DATE, note.dateCreated)
-
         db.insert(TABLE_NAME, null, values)
         db.close()
     }
@@ -46,18 +44,30 @@ class NoteDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
         val db = this.writableDatabase
         val values = ContentValues()
         values.put(COLUMN_COMPLETED, if (note.isCompleted) 1 else 0)
-
         db.update(TABLE_NAME, values, "$COLUMN_ID = ?", arrayOf(note.id.toString()))
+        db.close()
+    }
+
+    fun updateNote(note: Note) {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(COLUMN_TEXT, note.text)
+        values.put(COLUMN_COMPLETED, if (note.isCompleted) 1 else 0)
+        values.put(COLUMN_DATE, note.dateCreated)
+        db.update(TABLE_NAME, values, "$COLUMN_ID = ?", arrayOf(note.id.toString()))
+        db.close()
+    }
+    fun deleteNote(noteId: Int) {
+        val db = this.writableDatabase
+        db.delete(TABLE_NAME, "$COLUMN_ID = ?", arrayOf(noteId.toString()))
         db.close()
     }
 
     fun getAllNotes(): List<Note> {
         val noteList: MutableList<Note> = ArrayList()
         val selectQuery = "SELECT * FROM $TABLE_NAME"
-
         val db = this.readableDatabase
         val cursor = db.rawQuery(selectQuery, null)
-
         if (cursor.moveToFirst()) {
             do {
                 val note = Note(
@@ -69,11 +79,11 @@ class NoteDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
                 noteList.add(note)
             } while (cursor.moveToNext())
         }
-
         cursor.close()
         db.close()
-
         return noteList
     }
 }
+
+
 

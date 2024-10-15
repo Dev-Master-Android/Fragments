@@ -1,7 +1,10 @@
 package com.example.fragments
+
+import java.io.Serializable
+
 data class Note(
     val id: Int,
-    val text: String,
+    var text: String,
     var isCompleted: Boolean,
     val dateCreated: String
-)
+) : Serializable

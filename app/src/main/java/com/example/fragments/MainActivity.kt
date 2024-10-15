@@ -14,23 +14,33 @@ import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
+
     @SuppressLint("MissingInflatedId", "UseSupportActionBar")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-        // Настройка фрагмента
+
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, NoteFragment())
                 .commit()
+        }
+
+        supportFragmentManager.setFragmentResultListener("requestKey", this) { requestKey, bundle ->
+            val updatedNote = bundle.getSerializable("updatedNote") as Note
+            val noteFragment =
+                supportFragmentManager.findFragmentById(R.id.fragment_container) as? NoteFragment
+            noteFragment?.updateNoteInList(updatedNote)
+
         }
     }
 
     fun exitApp(view: View) {
         finish()
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
@@ -42,6 +52,7 @@ class MainActivity : AppCompatActivity() {
                 finish()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
