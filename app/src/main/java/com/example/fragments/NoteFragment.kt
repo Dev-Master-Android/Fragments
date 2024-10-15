@@ -27,6 +27,7 @@ class NoteFragment : Fragment() {
     private lateinit var addButton: Button
     private lateinit var dbHelper: NoteDatabaseHelper
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

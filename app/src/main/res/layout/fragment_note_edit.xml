@@ -18,17 +18,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
-        android:layout_margin="16dp"
-        android:hint="Изменить текст заметки" />
+        android:layout_margin="@dimen/_16dp"
+        android:hint="@string/change_note" />
 
     <Button
         android:id="@+id/updateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/editText"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/_16dp"
         android:layout_centerHorizontal="true"
-        android:text="Редактировать" />
+        android:text="@string/edit" />
 
     <Button
         android:id="@+id/deleteButton"
@@ -37,6 +37,6 @@
         android:layout_below="@id/updateButton"
         android:layout_marginTop="16dp"
         android:layout_centerHorizontal="true"
-        android:text="Удалить" />
+        android:text="@string/delete" />
 
 </RelativeLayout>

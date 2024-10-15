@@ -6,4 +6,11 @@
     <string name="input_note">Введите текст заметки</string>
     <string name="add_button">Добавить</string>
     <string name="exit">Exit</string>
+    <string name="edit">Редактировать</string>
+    <string name="delete">Удалить</string>
+    <string name="change_note">Изменить текст заметки</string>
+    <string name="note_text_here">Note text here</string>
+    <string name="date">12:00, 01/01/2022</string>
+    <string name="_1">1</string>
+    <string name="close">Выход</string>
 </resources>
